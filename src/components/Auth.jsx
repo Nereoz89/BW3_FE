@@ -10,9 +10,11 @@ const Auth = ({ token, setToken }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const apiUrl = import.meta.env.VITE_API_URL;
+    console.log("api url", apiUrl);
     try {
-      const endpoint = isLogin ? "/auth/login" : "/auth/register";
-      const response = await api.post(endpoint, { username, password });
+      const endpoint = isLogin ? "/api/auth/login" : "/api/auth/register";
+      const response = await api.post(`${apiUrl}${endpoint}`, { username, password });
       localStorage.setItem("token", response.data.token);
       setToken(response.data.token);
       navigate("/clienti");
@@ -34,24 +36,10 @@ const Auth = ({ token, setToken }) => {
       <h2>{isLogin ? "Login" : "Registrazione"}</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+          <input type="text" className="form-control" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
         </div>
         <div className="mb-3">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <input type="password" className="form-control" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
         <button type="submit" className="btn btn-primary">
           {isLogin ? "Login" : "Registrati"}

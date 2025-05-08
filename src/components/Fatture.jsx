@@ -8,11 +8,11 @@ const Fatture = ({ token }) => {
   useEffect(() => {
     if (token) {
       api
-        .get("/fatture", {
+        .get("/fatture?page=0&size=10&sort=numero", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          setFatture(response.data);
+          setFatture(response.data.content);
           setLoading(false);
         })
         .catch((error) => {
@@ -44,7 +44,7 @@ const Fatture = ({ token }) => {
         </thead>
         <tbody>
           {fatture.map((fattura) => (
-            <tr key={fattura.id}>
+            <tr key={fattura.numero}>
               <td>{fattura.numero}</td>
               <td>{fattura.data}</td>
               <td>{fattura.importo}</td>

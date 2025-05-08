@@ -8,11 +8,11 @@ const Clienti = ({ token }) => {
   useEffect(() => {
     if (token) {
       api
-        .get("/clienti", {
+        .get("/clienti?page=0&size=20&sort=id", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {
-          setClienti(response.data);
+          setClienti(response.data.content);
           setLoading(false);
         })
         .catch((error) => {
